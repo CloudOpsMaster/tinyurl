@@ -1,0 +1,17 @@
+users:
+  - name: john
+    state: present
+    shell: /bin/bash
+    password: "{{ 'password' | password_hash('sha512') }}"
+    groups: sudo
+  - name: jane
+    state: present
+    shell: /bin/zsh
+    password: "{{ 'password' | password_hash('sha512') }}"
+    groups: sudo
+  
+zsh_users:
+  - jane
+
+static_files:
+  - src: ./images/sample.jpg

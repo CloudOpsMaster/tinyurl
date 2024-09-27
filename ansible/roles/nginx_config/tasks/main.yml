@@ -1,0 +1,14 @@
+- name: Install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Configure nginx for static file serving
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+
+- name: Restart nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted

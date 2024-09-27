@@ -1,0 +1,5 @@
+- name: Deploy static files
+  copy:
+    src: "{{ item.src }}"
+    dest: /var/www/html/images/
+  loop: "{{ static_files }}"

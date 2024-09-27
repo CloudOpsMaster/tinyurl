@@ -1,0 +1,26 @@
+- name: Disable root login and empty passwords
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { regexp: '^#?PermitRootLogin.*', line: 'PermitRootLogin no' }
+    - { regexp: '^#?PasswordAuthentication.*', line: 'PasswordAuthentication yes' }
+    - { regexp: '^#?PermitEmptyPasswords.*', line: 'PermitEmptyPasswords no' }
+
+- name: Enable verbose logging
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?LogLevel.*'
+    line: 'LogLevel VERBOSE'
+
+- name: Disable X11 forwarding
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?X11Forwarding.*'
+    line: 'X11Forwarding no'
+
+- name: Restart SSH service
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
